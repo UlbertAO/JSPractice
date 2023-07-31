@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <style>
+      .center {
+        width: fit-content;
+        margin: auto;
+      }
+      .input * {
+        margin: 1rem;
+      }
+      label {
+        font-weight: bold;
+      }
+      table {
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        border: 1px solid black;
+        padding: 3px;
+        text-align: center;
+      }
+
+      th {
+        font-weight: bold;
+        background-color: #e6e6e6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center">
+      <label for="usrYear">Enter a valid Year : </label>
+      <input type="number" name="year" id="usrYear" />
+      <button onclick="createCalendar(calendar,+usrYear.value)">
+        Generate Calendar
+      </button>
+    </div>
+    <br />
+    <hr width="80%" />
+
+    <div id="calendar" class="center"></div>
+
+    <script>
+      currDate = new Date();
+      usrYear.value = currDate.getFullYear();
+      createCalendar(calendar, usrYear.value);
+      function generateMonthTable(year, month) {
+        let table = document.createElement('table');
+
+        //   heading
+        let headtr = document.createElement('tr');
+        let weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+        for (let week of weekdays) {
+          let th = document.createElement('th');
+          th.textContent = week;
+          headtr.append(th);
+        }
+        table.append(headtr);
+
+        // value
+        let date = new Date(year, month - 1);
+        let noDays = new Date(year, month - 1, 0).getDate();
+        let startingday = date.getDay();
+        let starttyping = false;
+
+        while (date.getMonth() < month && date.getFullYear() == year) {
+          let tr = document.createElement('tr');
+          for (let i = 1; i <= 7; i++) {
+            let td = document.createElement('td');
+            if (starttyping) {
+              // if(date.getMonth()>=month)break;
+              if (date.getMonth() >= month) {
+                td.textContent = '';
+              } else {
+                td.textContent = date.getDate();
+                if (
+                  currDate.getDate() == date.getDate() &&
+                  currDate.getMonth() == date.getMonth() &&
+                  currDate.getFullYear() == date.getFullYear()
+                ) {
+                  td.style.backgroundColor = '#20ff80';
+                }
+                date.setDate(date.getDate() + 1);
+              }
+            } else {
+              if (startingday == i % 7) {
+                td.textContent = date.getDate();
+                if (
+                  currDate.getDate() == date.getDate() &&
+                  currDate.getMonth() == date.getMonth()
+                ) {
+                  td.style.backgroundColor = '#20ff80';
+                }
+                date.setDate(date.getDate() + 1);
+                starttyping = true;
+              } else {
+                td.textContent = '';
+              }
+            }
+            tr.append(td);
+          }
+          table.append(tr);
+        }
+        return table;
+      }
+
+      function createCalendar(elem, year) {
+        monthTableArr = [];
+        let monthName = [
+          ['January', 'February', 'March', 'April', 'May', 'June'],
+          ['July', 'August', 'September', 'October', 'November', 'December'],
+        ];
+        for (let mon = 1; mon <= 12; mon++) {
+          monthTableArr.push(generateMonthTable(year, mon));
+        }
+        splitMon = [monthTableArr.slice(0, 6), monthTableArr.slice(6)];
+
+        let yrTable = document.createElement('table');
+
+        for (let i = 0; i < 6; i++) {
+          let tr = document.createElement('tr');
+          for (let j = 0; j < 2; j++) {
+            let td = document.createElement('td');
+            td.append(monthName[j][i]);
+            td.append(splitMon[j][i]);
+            tr.append(td);
+          }
+          yrTable.append(tr);
+        }
+        elem.firstChild == null
+          ? elem.append(yrTable)
+          : elem.firstChild.replaceWith(yrTable);
+      }
+    </script>
+  </body>
+</html>

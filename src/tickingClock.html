@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ticking Clock</title>
+  </head>
+
+  <body>
+    <div>
+      <span id="hr">hr</span>:<span id="min">min</span>:<span id="sec"
+        >sec</span
+      >
+    </div>
+    <input type="button" onclick="clockStart()" value="Start" />
+
+    <input type="button" onclick="clockStop()" value="Stop" />
+
+    <script>
+      let id = null;
+      function clockStart() {
+        if (!id) id = setInterval(updateTime, 1000);
+      }
+
+      function clockStop() {
+        clearInterval(id);
+        id = null;
+      }
+
+      function updateTime() {
+        let date = new Date();
+        hr.textContent = date.getHours();
+        min.textContent = date.getMinutes();
+        sec.textContent = date.getSeconds();
+      }
+    </script>
+  </body>
+</html>

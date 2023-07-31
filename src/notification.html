@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notification</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .notification {
+        position: relative;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+      }
+      .notification-item {
+        position: relative;
+        width: fit-content;
+        padding: 10px 20px;
+        margin: 15px;
+      }
+      .btngrp {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+      }
+      .btn {
+        padding: 5px 15px;
+      }
+      .success {
+        background-color: lightgreen;
+      }
+      .warning {
+        background-color: yellow;
+      }
+      .danger {
+        background-color: lightcoral;
+      }
+    </style>
+  </head>
+  <body>
+    <h4 style="text-align: center">Click btn to see Notifications</h4>
+
+    <div class="btngrp">
+      <button class="btn success" onclick="successNoti()">success</button>
+      <button class="btn warning" onclick="warningNoti()">warning</button>
+      <button class="btn danger" onclick="dangerNoti()">danger</button>
+    </div>
+
+    <div class="notification"></div>
+
+    <script>
+      let notificationCount = 0;
+
+      function successNoti() {
+        showNotification({
+          html: 'success Notification',
+          class: 'success',
+        });
+      }
+      function warningNoti() {
+        showNotification({
+          html: 'warning Notification',
+          class: 'warning',
+        });
+      }
+      function dangerNoti() {
+        showNotification({
+          html: 'danger Notification',
+          class: 'danger',
+        });
+      }
+      function showNotification(obj) {
+        let notificationItemDiv = document.createElement('div');
+        notificationItemDiv.classList.add('notification-item');
+        notificationItemDiv.classList.add(obj?.class);
+
+        notificationItemDiv.textContent =
+          obj?.html + ' - ' + ++notificationCount;
+
+        let noti = document.querySelector('.notification');
+        noti.append(notificationItemDiv);
+
+        setTimeout(() => {
+          notificationItemDiv.style.display = 'none';
+          notificationItemDiv.remove();
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

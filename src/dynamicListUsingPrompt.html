@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic List with Prompt</title>
+</head>
+
+<body>
+  cancel to exit
+
+  <script>
+    let ul = document.createElement('ul')
+    document.body.prepend(ul)
+    while (true) {
+      let litxt = prompt("Enter content for a li");
+      if (!litxt) break;
+      let li = document.createElement('li')
+      li.textContent = litxt;
+      ul.append(li);
+    }
+  </script>
+</body>
+
+</html>

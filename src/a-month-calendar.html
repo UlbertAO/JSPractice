@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A Month Calendar</title>
+  </head>
+  <head>
+    <style>
+      table {
+        border-collapse: collapse;
+      }
+
+      td,
+      th {
+        border: 1px solid black;
+        padding: 3px;
+        text-align: center;
+      }
+
+      th {
+        font-weight: bold;
+        background-color: #e6e6e6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="calendar"></div>
+
+    <script>
+      function createCalendar(elem, year, month) {
+        let table = document.createElement('table');
+
+        //   heading
+        let headtr = document.createElement('tr');
+        let weekdays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+        for (let week of weekdays) {
+          let th = document.createElement('th');
+          th.textContent = week;
+          headtr.append(th);
+        }
+        table.append(headtr);
+
+        // value
+        let date = new Date(year, month - 1);
+        let noDays = new Date(year, month - 1, 0).getDate();
+        let startingday = date.getDay();
+        let starttyping = false;
+
+        while (date.getMonth() < month) {
+          let tr = document.createElement('tr');
+          for (let i = 1; i <= 7; i++) {
+            let td = document.createElement('td');
+            if (starttyping) {
+              // if(date.getMonth()>=month)break;
+              if (date.getMonth() >= month) {
+                td.textContent = '';
+              } else {
+                td.textContent = date.getDate();
+                date.setDate(date.getDate() + 1);
+              }
+            } else {
+              if (startingday == i % 7) {
+                td.textContent = date.getDate();
+                date.setDate(date.getDate() + 1);
+                starttyping = true;
+              } else {
+                td.textContent = '';
+              }
+            }
+            tr.append(td);
+          }
+          table.append(tr);
+        }
+
+        elem.append(table);
+      }
+
+      createCalendar(calendar, 1999, 7);
+    </script>
+  </body>
+</html>

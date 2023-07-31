@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Object to tree</title>
+</head>
+
+<body>
+  Object :
+  data = {
+  Fish: {
+  trout: {},
+  salmon: {},
+  },
+
+  Tree: {
+  Huge: {
+  sequoia: {},
+  oak: {},
+  },
+  Flowering: {
+  'apple tree': {},
+  magnolia: {},
+  },
+  },
+  };
+  <script>
+    let data = {
+      Fish: {
+        trout: {},
+        salmon: {},
+      },
+
+      Tree: {
+        Huge: {
+          sequoia: {},
+          oak: {},
+        },
+        Flowering: {
+          'apple tree': {},
+          magnolia: {},
+        },
+      },
+    };
+
+    function traverse(ob, ul) {
+      if (ob == {}) return;
+      for (let k in ob) {
+        let li = document.createElement('li');
+        li.innerHTML = k;
+        if (ob[k] == {}) {
+          ul.append(li);
+        } else {
+          ul.append(li);
+          let innerUl = document.createElement('ul');
+          ul.append(innerUl);
+          traverse(ob[k], innerUl);
+        }
+      }
+    }
+
+    let ul = document.createElement('ul');
+    document.body.prepend(ul);
+    traverse(data, ul);
+  </script>
+</body>
+
+</html>
