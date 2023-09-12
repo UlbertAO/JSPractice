@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Selectable List</title>
+    <style>
+      .selected {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <ul id="list">
+      <li>here goes 1st item</li>
+      <li>here goes 2st item</li>
+      <li>here goes 3st item</li>
+      <li>here goes 4st item</li>
+      <li>here goes 5st item</li>
+      <li>here goes 6st item</li>
+    </ul>
+    <script>
+      let list = document.getElementById('list');
+      list.addEventListener('click', (event) => {
+        let target = event.target;
+        if (target.tagName != 'LI') return;
+        let listItem = target;
+        if (event.ctrlKey) {
+          listItem?.classList.toggle('selected');
+        } else {
+          for (let li of list.children) {
+            li?.classList.remove('selected');
+          }
+          listItem?.classList.toggle('selected');
+        }
+      });
+    </script>
+  </body>
+</html>
